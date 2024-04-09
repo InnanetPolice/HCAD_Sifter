@@ -25,7 +25,7 @@ def derive_years(start = "none" , end = 'none'):
         array = 0
         return array
     
-def filter_homes(df, market_area_codes, sqft, build_val, land_val, land_ar, years):
+def filter_homes(account, df, market_area_codes, sqft, build_val, land_val, land_ar, years):
     # Filter based on state_class and years
     state_class = ['A1']
     if type(years) == list:
@@ -45,7 +45,7 @@ def filter_homes(df, market_area_codes, sqft, build_val, land_val, land_ar, year
     # Apply criteria to filter DataFrame
     final_filtered_df = filtered_df[criteria]
     
-    return final_filtered_df
+    return pd.concat([final_filtered_df, account])
 
 
 #year range you'd like to query for, can give it no range of years to retrieve all years
@@ -67,7 +67,7 @@ land_ar = account["land_ar"].iloc[0]
 
 
 # Call the function to filter homes
-filtered_homes = filter_homes(df1, market_area_codes, bld_ar, bld_val, land_val, land_ar, years)
+filtered_homes = filter_homes(account, df1, market_area_codes, bld_ar, bld_val, land_val, land_ar, years)
 
 # Save the filtered DataFrame to a CSV file
 filtered_homes.to_csv('list_of_lower_assessed_homes.csv', index=False)
